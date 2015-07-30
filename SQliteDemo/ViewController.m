@@ -75,7 +75,13 @@
      }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    Person *p = self.persons[indexPath.row];
     
+    [self.persons removeObjectAtIndex:indexPath.row];
+    [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                     withRowAnimation:UITableViewRowAnimationAutomatic];
+    [PersonTool delete:p];
+    //[self.tableView reloadData];
 }
 
 - (void)add: (id)sender{
@@ -92,7 +98,7 @@
  #pragma mark-搜索框的代理方法
  -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
  {
-         self.persons=[PersonTool queryWithCondition:searchText];
+         self.persons = [PersonTool queryWithCondition:searchText];
          //刷新表格
          [self.tableView reloadData];
          [searchBar resignFirstResponder];

@@ -10,7 +10,7 @@
 
 @interface ViewController : UIViewController<UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic, strong) NSArray *persons;
+@property (nonatomic, strong) NSMutableArray *persons;
 
 @property (nonatomic, strong) UITableView *tableView;
 

@@ -56,13 +56,24 @@ static sqlite3 *_db;
 
 }
 
++(void) delete:(Person *)person{
+    NSString *sql = [NSString stringWithFormat:@"DELETE FROM t_person WHERE name = '%@'", person.name];
+    char *errmsg = NULL;
+    sqlite3_exec(_db, sql.UTF8String, NULL, NULL, &errmsg);
+    if (errmsg) {
+        NSLog(@"删除数据失败--%s", errmsg);
+    }else{
+        NSLog(@"删除数据成功");
+    }
+}
+
 +(NSArray *)query{
 
     return [self queryWithCondition:@""];
 }
 
 //模糊查询
-+(NSArray *)queryWithCondition:(NSString *)condition{
++(NSMutableArray *)queryWithCondition:(NSString *)condition{
 //数组，用来存放查询到的联系人
     NSMutableArray *persons = nil;
     NSString *NSsql = [NSString stringWithFormat:@"SELECT id, name, age FROM t_person WHERE name like '%%%@%%' ORDER BY age ASC;", condition];
